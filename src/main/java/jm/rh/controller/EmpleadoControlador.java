@@ -21,14 +21,15 @@ public class EmpleadoControlador {
     private IEmpleadoServicio empleadoServicio;
 
     // http://localhost:8080/rh-app/empleados
-
-    @GetMapping("/empleados") // Busqueda de empleados
+    // Busqueda de empleados
+    @GetMapping("/empleados")
     public List<Empleado> obtenerEmpleados(){
         var empleados = empleadoServicio.listarEmpleado();
         empleados.forEach((empleado -> logger.info(empleado.toString())));
         return empleados;
     }
-    @PostMapping("/empleados")  // insertar o agregar
+    // insertar o agregar
+    @PostMapping("/empleados")
     public Empleado agregarEmpleado(@RequestBody Empleado empleado){
         logger.info("Empleado a agregar: " + empleado);
         return empleadoServicio.guardarEmpleado(empleado);
