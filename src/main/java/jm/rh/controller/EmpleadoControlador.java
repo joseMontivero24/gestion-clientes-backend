@@ -37,7 +37,7 @@ public class EmpleadoControlador {
         logger.info("Empleado a agregar: " + empleado);
         return empleadoServicio.guardarEmpleado(empleado);
     }
-
+    // Editar empleado
     @GetMapping("/empleados/{id}")
     public ResponseEntity<Empleado> obtenerEmpleadoPorId(@PathVariable Integer id) {
         Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
@@ -46,5 +46,18 @@ public class EmpleadoControlador {
         }
             return ResponseEntity.ok(empleado);
     }
+    // Actualizar
+    @PutMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Integer id, @RequestBody Empleado empleadoRecibido){
+        Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
+        if (empleado == null)
+            throw new RecursoNoEncontradoExepcion("El id recibido no esxiste: " + id);
+            empleado.setNombre(empleadoRecibido.getNombre());
+            empleado.setDepartamento(empleadoRecibido.getDepartamento());
+            empleado.setSueldo(empleadoRecibido.getSueldo());
+            empleadoServicio.guardarEmpleado(empleado);
+            return ResponseEntity.ok(empleado);
+
+    }
+
 }
-// ME QUEDE EN EL VIDEO 405
