@@ -1,6 +1,8 @@
 package jm.rh.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jm.rh.exepcion.RecursoNoEncontradoExepcion;
 import org.slf4j.Logger;
@@ -58,6 +60,18 @@ public class EmpleadoControlador {
             empleadoServicio.guardarEmpleado(empleado);
             return ResponseEntity.ok(empleado);
 
+    }
+
+    // Eliminar
+    @DeleteMapping("/empleados/{id}")
+    public ResponseEntity<Map<String, Boolean>> eliminarEmpleado(@PathVariable Integer id){
+        Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
+        if (empleado == null)
+            throw new RecursoNoEncontradoExepcion("El id recibido no existe: " + id);
+        empleadoServicio.elimiarEmpleado(empleado);
+        Map<String, Boolean> respuesta = new HashMap<>();
+        respuesta.put("eliminado", Boolean.TRUE);
+        return ResponseEntity.ok(respuesta);
     }
 
 }
